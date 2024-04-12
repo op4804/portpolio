@@ -17,7 +17,7 @@ public class CharacterManager : MonoBehaviour
             transform.Translate(-1,0,0);
         }
         else if (Input.GetKeyUp(KeyCode.RightArrow)) {
-            transform.Translate(-1,0,0);
+            transform.Translate(1,0,0);
         }
     }
 }
