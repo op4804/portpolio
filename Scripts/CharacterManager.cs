@@ -43,6 +43,7 @@ public class CharacterManager : MonoBehaviour
 
     public bool Grounded()
     {
+        // 이 부분 코드 이해가 조금 더 필요해서 더 간단하게 만들면 좋을 것 같음. 
         if (Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(-groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround))
@@ -57,6 +58,7 @@ public class CharacterManager : MonoBehaviour
 
     void Jump()
     {
+        // 이 부분도 점프를 GetInouts()와  같이 관리하지 않는 이유에 대해서 얘기해보고 싶음. 
         if (Input.GetButtonDown("Jump") && Grounded())
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce);
