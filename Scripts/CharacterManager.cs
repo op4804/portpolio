@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
+
     [Header("Horizontal Movement Settings")]
     [SerializeField] private float walkSpeed = 1;
     
@@ -15,8 +16,12 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float groundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
 
+    [SerializeField] private Animator anim;
+
     private Rigidbody2D rb;
     private float xAxis;
+    bool attack = false;
+    float timeBetweenAttack, timeSinceAttack;
 
     public static CharacterManager Instance;
 
@@ -39,16 +44,26 @@ public class CharacterManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         GetInputs();
         Move();
         Jump();
+        Attack();
+    }
+
+    private void OnTriggerEnter2D(Collider2D _other)
+    {
+        if (_other.tag == "Enemy")
+        {
+            Debug.Log("Hit");
+        }
     }
 
     void GetInputs()
     {
         xAxis = Input.GetAxisRaw("Horizontal");
+        attack = Input.GetMouseButtonDown(0);
     }
 
     private void Move()
@@ -83,6 +98,17 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetButtonDown("Jump") && Grounded())
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce);
+        }
+    }
+
+    void Attack()
+    {
+        timeSinceAttack = Time.deltaTime;
+
+        if (attack && timeSinceAttack >= timeBetweenAttack)
+        {
+            timeSinceAttack = 0;
+            anim.SetTrigger("Attack");
         }
     }
 }
