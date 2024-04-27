@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 17330579}
   - component: {fileID: 17330581}
   - component: {fileID: 17330576}
+  - component: {fileID: 17330582}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -163,6 +164,10 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  recoilXSteps: 5
+  recoilYSteps: 5
+  recoilXSpeed: 100
+  recoilYSpeed: 100
   anim: {fileID: 17330581}
 --- !u!212 &17330577
 SpriteRenderer:
@@ -326,6 +331,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &17330582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17330575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca05981e903634a439c2639ca476b09a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumping: 0
+  recoilingX: 0
+  recoilingY: 0
+  lookingRight: 0
 --- !u!1 &65846779
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class CharacterManager : MonoBehaviour
     [Header("Horizontal Movement Settings")]
     [SerializeField] private float walkSpeed = 1;
     
+    [Header("Verticla Movement Settings")]
+    private float gravity;
+
 
     [Header("Ground Check Settings")]
     private float jumpForce = 45;
@@ -16,10 +20,18 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float groundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
 
+    [Header("Recoil")]
+    [SerializeField] int recoilXSteps = 5;
+    [SerializeField] int recoilYSteps = 5;
+    [SerializeField] float recoilXSpeed = 100;
+    [SerializeField] float recoilYSpeed = 100;
+    
     [SerializeField] private Animator anim;
 
     private Rigidbody2D rb;
+    PlayerStateList pState;
     private float xAxis;
+    private float yAxis;
     bool attack = false;
     float timeBetweenAttack, timeSinceAttack;
 
@@ -40,6 +52,7 @@ public class CharacterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pState = GetComponent<PlayerStateList>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -49,6 +62,7 @@ public class CharacterManager : MonoBehaviour
         GetInputs();
         Move();
         Jump();
+        Flip();
         Attack();
     }
 
@@ -66,14 +80,58 @@ public class CharacterManager : MonoBehaviour
         attack = Input.GetMouseButtonDown(0);
     }
 
+    void Flip() 
+    {
+        if (xAxis < 0)
+        {
+            transform.localScale = new Vector2(1, transform.localScale.y);
+        }
+        else if (xAxis > 0) 
+        {
+            transform.localScale = new Vector2(-1, transform.localScale.y);
+        }
+    }
+
     private void Move()
     {
         rb.velocity = new Vector2(walkSpeed * xAxis, rb.velocity.y);
     }
 
+    void Recoil() 
+    {
+        if (pState.recoilingX) 
+        {
+          if (pState.lookingRight) 
+          {
+              rb.velocity = new Vector2(-recoilXSpeed, 0);
+          }
+          else
+          {
+              rb.velocity = new Vector2(recoilXSpeed, 0);
+          }
+        }
+
+        if (pState.recoilingY)
+        {
+            rb.gravityScale = 0;
+           if (yAxis < 0)
+           {
+              rb.velocity = new Vector2(rb.velocity.x, recoilYSpeed);
+           }
+           else
+           {
+              rb.velocity = new Vector2(rb.velocity.x, -recoilYSpeed);
+           }
+        }
+        else
+        {
+            rb.gravityScale = gravity;
+        }
+    }
+
     public bool Grounded()
     {
-        // ÀÌ ºÎºÐ ÄÚµå ÀÌÇØ°¡ Á¶±Ý ´õ ÇÊ¿äÇØ¼­ ´õ °£´ÜÇÏ°Ô ¸¸µé¸é ÁÁÀ» °Í °°À½. 
+        // ï¿½ï¿½ ï¿½Îºï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½Ø°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 
         if (Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(-groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround))
@@ -91,13 +149,15 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
+            pState.jumping = true;
         }
 
 
-        // ÀÌ ºÎºÐµµ Á¡ÇÁ¸¦ GetInouts()¿Í  °°ÀÌ °ü¸®ÇÏÁö ¾Ê´Â ÀÌÀ¯¿¡ ´ëÇØ¼­ ¾ê±âÇØº¸°í ½ÍÀ½.
+        // ï¿½ï¿½ ï¿½ÎºÐµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GetInouts()ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         if (Input.GetButtonDown("Jump") && Grounded())
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce);
+            pState.jumping = true;
         }
     }
 
