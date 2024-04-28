@@ -21,20 +21,18 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
 
     [Header("Recoil")]
-    [SerializeField] int recoilXSteps = 5;
-    [SerializeField] int recoilYSteps = 5;
-    [SerializeField] float recoilXSpeed = 100;
-    [SerializeField] float recoilYSpeed = 100;
+    // 이동에 걸리는 시간 (초)
+    [SerializeField] public float moveDuration = 0.1f;
     
     [SerializeField] private Animator anim;
 
     private Rigidbody2D rb;
     PlayerStateList pState;
     private float xAxis;
-    private float yAxis;
     bool attack = false;
     float timeBetweenAttack, timeSinceAttack;
-
+    // 리코일의 이동할 목표 위치
+    private Vector2 targetPosition;
     public static CharacterManager Instance;
 
     private void Awake()
@@ -71,7 +69,41 @@ public class CharacterManager : MonoBehaviour
         if (_other.tag == "Enemy")
         {
             Debug.Log("Hit");
+
+            pState.recoilingX = true;
+
+            if (transform.position.x - _other.transform.position.x > 0) 
+            {
+                // 목표 위치 설정
+                targetPosition = transform.position + new Vector3(4, 0, 0);
+            }
+            else if (transform.position.x - _other.transform.position.x < 0)
+            {
+                // 목표 위치 설정
+                targetPosition = transform.position + new Vector3(-4, 0, 0);
+            }
+
+            // Coroutine 시작
+            StartCoroutine(MoveOverTime());
         }
+    }
+
+    // 서서히 리코일하는 Coroutine
+    private IEnumerator MoveOverTime()
+    {
+        float elapsedTime = 0f;
+        Vector2 startPosition = transform.position;
+
+        while (elapsedTime < moveDuration)
+        {
+            float t = elapsedTime / moveDuration;
+            transform.position = Vector2.Lerp(startPosition, targetPosition, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 이동 완료 후 마지막 위치 설정 (목표 위치)
+        transform.position = targetPosition;
     }
 
     void GetInputs()
@@ -85,48 +117,18 @@ public class CharacterManager : MonoBehaviour
         if (xAxis < 0)
         {
             transform.localScale = new Vector2(1, transform.localScale.y);
+            pState.lookingRight = false;
         }
         else if (xAxis > 0) 
         {
             transform.localScale = new Vector2(-1, transform.localScale.y);
+            pState.lookingRight = true;
         }
     }
 
     private void Move()
     {
         rb.velocity = new Vector2(walkSpeed * xAxis, rb.velocity.y);
-    }
-
-    void Recoil() 
-    {
-        if (pState.recoilingX) 
-        {
-          if (pState.lookingRight) 
-          {
-              rb.velocity = new Vector2(-recoilXSpeed, 0);
-          }
-          else
-          {
-              rb.velocity = new Vector2(recoilXSpeed, 0);
-          }
-        }
-
-        if (pState.recoilingY)
-        {
-            rb.gravityScale = 0;
-           if (yAxis < 0)
-           {
-              rb.velocity = new Vector2(rb.velocity.x, recoilYSpeed);
-           }
-           else
-           {
-              rb.velocity = new Vector2(rb.velocity.x, -recoilYSpeed);
-           }
-        }
-        else
-        {
-            rb.gravityScale = gravity;
-        }
     }
 
     public bool Grounded()
@@ -136,6 +138,7 @@ public class CharacterManager : MonoBehaviour
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(-groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround))
         {
+            pState.jumping = false;
             return true;
         }
         else

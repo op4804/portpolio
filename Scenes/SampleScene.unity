@@ -165,10 +165,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   recoilXSteps: 5
-  recoilYSteps: 5
-  recoilXSpeed: 100
-  recoilYSpeed: 100
+  recoilXSpeed: 50
   anim: {fileID: 17330581}
+  moveDuration: 0.1
 --- !u!212 &17330577
 SpriteRenderer:
   m_ObjectHideFlags: 0
