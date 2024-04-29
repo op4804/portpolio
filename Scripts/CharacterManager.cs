@@ -35,6 +35,14 @@ public class CharacterManager : MonoBehaviour
     private Vector2 targetPosition;
     public static CharacterManager Instance;
 
+
+
+    // for enemy attack
+
+    [SerializeField] float damage = 1;
+
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -69,6 +77,11 @@ public class CharacterManager : MonoBehaviour
         if (_other.tag == "Enemy")
         {
             Debug.Log("Hit");
+
+            // 적 공격 부
+            _other.GetComponent<Enemy>().Hit(damage);
+
+
 
             pState.recoilingX = true;
 

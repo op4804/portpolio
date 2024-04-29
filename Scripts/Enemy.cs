@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    int EnemyHp;
+    [SerializeField] float EnemyHp = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -17,5 +17,18 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
+        if (EnemyHp <= 0) 
+        {
+            Destroy(gameObject);
+        }
+
+
+    }
+
+
+
+    public void Hit(float _damage)
+    {
+        EnemyHp -= _damage;
     }
 }
