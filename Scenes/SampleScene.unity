@@ -163,9 +163,11 @@ MonoBehaviour:
   groundCheckX: 0.5
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
-  moveDuration: 0.1
+    m_Bits: 8
+  recoilXSteps: 5
+  recoilXSpeed: 50
   anim: {fileID: 17330581}
+  moveDuration: 0.1
 --- !u!212 &17330577
 SpriteRenderer:
   m_ObjectHideFlags: 0
