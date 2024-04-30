@@ -163,7 +163,7 @@ MonoBehaviour:
   groundCheckX: 0.5
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   moveDuration: 0.1
   anim: {fileID: 17330581}
   damage: 1
@@ -2068,7 +2068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1547655859
 Transform:
   m_ObjectHideFlags: 0
