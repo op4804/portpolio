@@ -101,6 +101,28 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D _other)
+    {
+        if (_other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Body Hit!");
+
+            if (transform.position.x - _other.transform.position.x > 0) 
+            {
+                // 목표 위치 설정
+                targetPosition = transform.position + new Vector3(2, 2, 0);
+            }
+            else if (transform.position.x - _other.transform.position.x < 0)
+            {
+                // 목표 위치 설정
+                targetPosition = transform.position + new Vector3(-2, 2, 0);
+            }
+
+            // Coroutine 시작
+            StartCoroutine(MoveOverTime());
+        }
+    }
+
     // 서서히 리코일하는 Coroutine
     private IEnumerator MoveOverTime()
     {
