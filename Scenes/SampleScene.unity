@@ -1850,7 +1850,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &1130673837
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1930,7 +1930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5deee34df42ab44944f6aa79b47d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHp: 0
+  EnemyHp: 10
   patrolWidth: 4
   patrolStep: 0.2
   patrolStepTime: 0.02
