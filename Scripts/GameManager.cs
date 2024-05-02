@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+
+    [SerializeField] GameObject startPoint;
+
+    [SerializeField] GameObject player;
+
+
+    private void Awake()
+    {
+        Instantiate(player, startPoint.transform.position, Quaternion.identity);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
