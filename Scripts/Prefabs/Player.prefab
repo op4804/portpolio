@@ -266,10 +266,12 @@ MonoBehaviour:
   groundCheckX: 0.5
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 8
   moveDuration: 0.1
   anim: {fileID: 1834388656835639021}
-  damage: 1
+  hp: 10
+  knockbackSpeed: 20
+  damage: 2
 --- !u!114 &6667510376367788799
 MonoBehaviour:
   m_ObjectHideFlags: 0
