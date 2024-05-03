@@ -42,6 +42,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] int knockbackSpeed = 10;
     // for enemy attack
     [SerializeField] float damage = 1;
+    GameObject bullets;
     public GameObject bullet;
     public Transform bulletPos;
     public float bulletCooltime;
@@ -65,7 +66,7 @@ public class CharacterManager : MonoBehaviour
     float timeBetweenAttack, timeSinceAttack;
     // 리코일의 이동할 목표 위치
     private Vector2 targetPosition;
-    public static CharacterManager Instance;
+    public static CharacterManager Instance; 
 
 
 
@@ -287,7 +288,8 @@ public class CharacterManager : MonoBehaviour
             if (Input.GetKey(KeyCode.Z))
             {
                 Debug.Log("shot!");
-                Instantiate(bullet, bulletPos.position, transform.rotation);
+                bullets = Instantiate(bullet, bulletPos.position, transform.rotation);
+                bullets.GetComponent<bullet>().dir = pState.lookingRight;
             }
             curTime = bulletCooltime;
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
     PlayerStateList pState;
+    public bool dir;
 
     public float bulletSpeed;
     // Start is called before the first frame update
@@ -17,16 +18,18 @@ public class bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.rotation.y < 0)
+        if (dir)
         {
-            Debug.Log("Right");
             transform.Translate(transform.right * bulletSpeed * Time.deltaTime);
+
         }
         else
         {
-            Debug.Log("Left");
             transform.Translate(transform.right * -1 * bulletSpeed * Time.deltaTime);
         }
+
+
+
     }
 
     void DestroyBullet()
