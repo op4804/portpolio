@@ -37,11 +37,15 @@ public class CharacterManager : MonoBehaviour
 
 
 
-    [Header("HP & Attack Damage")]
+    [Header("HP & Attack Settings")]
     [SerializeField] int hp = 10;
     [SerializeField] int knockbackSpeed = 10;
     // for enemy attack
     [SerializeField] float damage = 1;
+    public GameObject bullet;
+    public Transform bulletPos;
+    public float bulletCooltime;
+    private float curTime;
 
 
     // Noraml Variables
@@ -91,6 +95,7 @@ public class CharacterManager : MonoBehaviour
         Jump();
         Flip();
         Attack();
+        ShotAttack();
     }
 
     // Recoil when Player attack with weapon
@@ -264,6 +269,20 @@ public class CharacterManager : MonoBehaviour
             timeSinceAttack = 0;
             anim.SetTrigger("Attack");
         }
+    }
+
+    void ShotAttack()
+    {
+        if (curTime <= 0)
+        {
+            if (Input.GetKey(KeyCode.Z))
+            {
+                Debug.Log("shot!");
+                Instantiate(bullet, bulletPos.position, transform.rotation);
+            }
+            curTime = bulletCooltime;
+        }
+        curTime -= Time.deltaTime;
     }
 
     // Player gets damage function
