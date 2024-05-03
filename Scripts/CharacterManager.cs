@@ -44,6 +44,10 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] float damage = 1;
 
 
+
+    [SerializeField] GameObject startPoint;
+
+
     // Noraml Variables
     private Rigidbody2D rb;
     PlayerStateList pState;
@@ -189,6 +193,11 @@ public class CharacterManager : MonoBehaviour
 
     private void Move()
     {
+
+        if (this.transform.position.x < startPoint.transform.position.x)
+        {
+            xAxis = 0;
+        }
         rb.velocity = new Vector2(walkSpeed * xAxis, rb.velocity.y);
     }
 

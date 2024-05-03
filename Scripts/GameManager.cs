@@ -5,9 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-
+    // when game start, instantiate player object on startpoint.
     [SerializeField] GameObject startPoint;
-
     [SerializeField] GameObject player;
 
 
