@@ -276,6 +276,10 @@ MonoBehaviour:
   hp: 10
   knockbackSpeed: 20
   damage: 2
+  bullet: {fileID: 0}
+  bulletPos: {fileID: 0}
+  bulletCooltime: 0.1
+  startPoint: {fileID: 0}
 --- !u!114 &6667510376367788799
 MonoBehaviour:
   m_ObjectHideFlags: 0

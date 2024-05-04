@@ -5,6 +5,8 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
     PlayerStateList pState;
+    public float distance;
+    public LayerMask isLayer;
     public bool dir;
 
     public float bulletSpeed;
@@ -18,6 +20,17 @@ public class bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, transform.right, distance, isLayer);
+        if (ray.collider != null)
+        {
+            if (ray.collider.tag == "Enemy")
+            {
+                Debug.Log("Bullet Hit!");
+
+                r
+            }
+            DestroyBullet();
+        }
         if (dir)
         {
             transform.Translate(transform.right * bulletSpeed * Time.deltaTime);
