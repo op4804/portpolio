@@ -8,6 +8,7 @@ public class bullet : MonoBehaviour
     public float distance;
     public LayerMask isLayer;
     public bool dir;
+    [SerializeField] public int damage;
 
     public float bulletSpeed;
     // Start is called before the first frame update
@@ -26,15 +27,13 @@ public class bullet : MonoBehaviour
             if (ray.collider.tag == "Enemy")
             {
                 Debug.Log("Bullet Hit!");
-
-                r
+                ray.collider.GetComponent<Enemy>().Hit(damage);
             }
             DestroyBullet();
         }
         if (dir)
         {
             transform.Translate(transform.right * bulletSpeed * Time.deltaTime);
-
         }
         else
         {

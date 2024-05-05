@@ -102,4 +102,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   dir: 0
+  damage: 2
   bulletSpeed: 30

@@ -290,8 +290,9 @@ public class CharacterManager : MonoBehaviour
                 Debug.Log("shot!");
                 bullets = Instantiate(bullet, bulletPos.position, transform.rotation);
                 bullets.GetComponent<bullet>().dir = pState.lookingRight;
+                curTime = bulletCooltime;
             }
-            curTime = bulletCooltime;
+            
         }
         curTime -= Time.deltaTime;
     }
