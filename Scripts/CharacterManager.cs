@@ -202,14 +202,14 @@ public class CharacterManager : MonoBehaviour
 
         if (this.transform.position.x < startPoint.transform.position.x)
         {
-            xAxis = 0;
+            StartCoroutine(Knockback(-1));
         }
         rb.velocity = new Vector2(walkSpeed * xAxis, rb.velocity.y);
     }
 
     public bool Grounded()
     {
-        // �� �κ� �ڵ� ���ذ� ���� �� �ʿ��ؼ� �� �����ϰ� ����� ���� �� ����. 
+
         if (Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround) 
             || Physics2D.Raycast(groundCheckPoint.position + new Vector3(-groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround))
