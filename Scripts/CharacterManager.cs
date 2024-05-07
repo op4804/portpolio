@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Playables;
 
 public class CharacterManager : MonoBehaviour
@@ -38,8 +39,14 @@ public class CharacterManager : MonoBehaviour
 
 
 
-    [Header("HP & Attack Settings")]
-    [SerializeField] int hp = 10;
+    [Header("HP Settings")]
+    [SerializeField] float hp = 10;
+    [SerializeField] float curHp = 10;
+    [SerializeField] Slider hpBar;
+
+
+
+    [Header("Attack Settings")]
     [SerializeField] int knockbackSpeed = 10;
     // for enemy attack
     [SerializeField] float damage = 1;
@@ -91,7 +98,7 @@ public class CharacterManager : MonoBehaviour
         pState = GetComponent<PlayerStateList>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-
+        // hpBar.value = (float)curHp / (float)hp;
         // whatIsGround = LayerMask.NameToLayer("Ground");
     }
 
@@ -313,13 +320,15 @@ public class CharacterManager : MonoBehaviour
         if (!isHurt)
         {
             isHurt = true;
-            hp = hp - damage;
-            if (hp < 0)
+            curHp = curHp - damage;
+            if (curHp <= 0)
             {
+                hpBar.value = 0;
                 Destroy(gameObject);
             }
             else
             {
+                HandleHp();
                 float x = transform.position.x - pos.x;
                 if (x < 0)
                   x = 1;
@@ -331,6 +340,11 @@ public class CharacterManager : MonoBehaviour
                 StartCoroutine(AlphaBlink());
             }
         }
+    }
+
+    private void HandleHp()
+    {
+        hpBar.value = (float)curHp / (float)hp;
     }
 
     // Recoil Function
