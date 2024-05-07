@@ -1,23 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-
-    [Header("UI Setting")]
-    [SerializeField] GameObject startButton;
-    [SerializeField] GameObject exitButton;
-
-
-
-    private void Awake()
-    {
-        
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +19,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // UI
 
     public void OnClickStartButton()
     {
         Debug.Log("onclickButton");
+        SceneManager.LoadScene("Stage");
+        
+    }
+
+    public void OnClickExitButton()
+    {
+        Debug.Log("onclickButton");
+        Application.Quit();
     }
 }
