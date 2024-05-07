@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -91,7 +92,7 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
 
-        whatIsGround = LayerMask.NameToLayer("Ground");
+        // whatIsGround = LayerMask.NameToLayer("Ground");
     }
 
     // Update is called once per frame
@@ -118,21 +119,23 @@ public class CharacterManager : MonoBehaviour
 
 
 
+            // 이부분 리코일 따로 빼줄 수 있나?
+            float recoilPower = 2f;
             pState.recoilingX = true;
 
             if (transform.position.x - _other.transform.position.x > 0) 
             {
                 // 목표 위치 설정
-                targetPosition = transform.position + new Vector3(4, 0, 0);
+                targetPosition = transform.position + new Vector3(recoilPower, 0, 0);
             }
             else if (transform.position.x - _other.transform.position.x < 0)
             {
                 // 목표 위치 설정
-                targetPosition = transform.position + new Vector3(-4, 0, 0);
+                targetPosition = transform.position + new Vector3(-recoilPower, 0, 0);
             }
 
             // Coroutine 시작
-            StartCoroutine(MoveOverTime());
+            StartCoroutine(MoveOverTime(targetPosition));
         }
     }
 
@@ -163,7 +166,7 @@ public class CharacterManager : MonoBehaviour
     }
 
     // 서서히 리코일하는 Coroutine
-    private IEnumerator MoveOverTime()
+    private IEnumerator MoveOverTime(Vector2 _targetPosition)
     {
         float elapsedTime = 0f;
         Vector2 startPosition = transform.position;
@@ -171,13 +174,13 @@ public class CharacterManager : MonoBehaviour
         while (elapsedTime < moveDuration)
         {
             float t = elapsedTime / moveDuration;
-            transform.position = Vector2.Lerp(startPosition, targetPosition, t);
+            transform.position = Vector2.Lerp(startPosition, _targetPosition, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         // 이동 완료 후 마지막 위치 설정 (목표 위치)
-        transform.position = targetPosition;
+        transform.position = _targetPosition;
     }
 
     void GetInputs()
