@@ -49,8 +49,9 @@ public class CharacterManager : MonoBehaviour
     private float curTime;
 
 
-
+    [Header("Stage Setting")]
     [SerializeField] GameObject startPoint;
+    [SerializeField] GameObject endPoint;
 
 
     // Noraml Variables
@@ -89,6 +90,8 @@ public class CharacterManager : MonoBehaviour
         pState = GetComponent<PlayerStateList>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        whatIsGround = LayerMask.NameToLayer("Ground");
     }
 
     // Update is called once per frame
@@ -203,6 +206,10 @@ public class CharacterManager : MonoBehaviour
         if (this.transform.position.x < startPoint.transform.position.x)
         {
             StartCoroutine(Knockback(-1));
+        }
+        if (this.transform.position.x > endPoint.transform.position.x)
+        {
+            Debug.Log("StageClear!");
         }
         rb.velocity = new Vector2(walkSpeed * xAxis, rb.velocity.y);
     }
