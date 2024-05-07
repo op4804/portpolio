@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject startPoint;
     [SerializeField] GameObject player;
 
+    public float mapSize;
+
 
     private void Awake()
     {
