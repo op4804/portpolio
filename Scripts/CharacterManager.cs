@@ -22,21 +22,16 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private int maxAirJumps;
 
 
-
     [Header("Ground Check Settings")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckY = 0.2f;
     [SerializeField] private float groundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
 
-
-
     [Header("Recoil Settings")]
     // 이동에 걸리는 시간 (초)
-    [SerializeField] public float moveDuration = 0.1f;
-    
+    [SerializeField] public float moveDuration = 0.1f;    
     [SerializeField] private Animator anim;
-
 
 
     [Header("HP Settings")]
@@ -77,9 +72,9 @@ public class CharacterManager : MonoBehaviour
     private Vector2 targetPosition;
     public static CharacterManager Instance;
 
-    GameObject sm;
 
-
+    GameObject sm; 
+    GameObject gameOverWindow;
 
 
     private void Awake()
@@ -104,6 +99,7 @@ public class CharacterManager : MonoBehaviour
         // whatIsGround = LayerMask.NameToLayer("Ground");
 
         sm = GameObject.Find("StageManager");
+        gameOverWindow = GameObject.Find("GameOverWindow");
     }
 
     // Update is called once per frame
@@ -111,7 +107,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (sm.GetComponent<StageManager>().isPaused)
         {
-
+            Debug.Log("Paused!!!!");
         }
         else
         {
@@ -135,8 +131,6 @@ public class CharacterManager : MonoBehaviour
 
             // 적 공격 부
             _other.GetComponent<Enemy>().Hit(damage);
-
-
 
             // 이부분 리코일 따로 빼줄 수 있나?
             float recoilPower = 2f;
@@ -337,10 +331,10 @@ public class CharacterManager : MonoBehaviour
             {
                 hpBar.value = 0;
                 // player dead
-                GameObject gameOverWindow = GameObject.Find("GameOverWindow");
-                gameOverWindow.SetActive(true);
-                Destroy(gameObject);
                 
+                gameOverWindow.SetActive(true);
+                
+                Destroy(gameObject);              
                 
             }
             else
