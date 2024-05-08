@@ -5,7 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] float EnemyHp = 10;
+    [SerializeField] float enemyHp = 10;
+    [SerializeField] public float enemyDamage = 1f;
 
     Rigidbody2D rb;
 
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
         
-        if (EnemyHp <= 0) 
+        if (enemyHp <= 0) 
         {
             Destroy(gameObject);
         }
@@ -31,7 +32,7 @@ public class Enemy : MonoBehaviour
 
     public void Hit(float _damage)
     {
-        EnemyHp -= _damage;
+        enemyHp -= _damage;
 
         // rb.AddForce(Vector2.right * 10f * Time.deltaTime, ForceMode2D.Force);
 

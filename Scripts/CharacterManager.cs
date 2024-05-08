@@ -166,7 +166,7 @@ public class CharacterManager : MonoBehaviour
         {
             Debug.Log("Body Hit!");
 
-            Hurt(1, _other.transform.position);
+            Hurt(_other.gameObject.GetComponent<Enemy>().enemyDamage, _other.transform.position);
 
             // if (transform.position.x - _other.transform.position.x > 0) 
             // {
@@ -327,7 +327,7 @@ public class CharacterManager : MonoBehaviour
     }
 
     // Player gets damage function
-    public void Hurt(int damage, Vector2 pos)
+    public void Hurt(float damage, Vector2 pos)
     {
         if (!isHurt)
         {
