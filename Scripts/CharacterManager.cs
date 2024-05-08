@@ -336,7 +336,12 @@ public class CharacterManager : MonoBehaviour
             if (curHp <= 0)
             {
                 hpBar.value = 0;
+                // player dead
+                GameObject gameOverWindow = GameObject.Find("GameOverWindow");
+                gameOverWindow.SetActive(true);
                 Destroy(gameObject);
+                
+                
             }
             else
             {
