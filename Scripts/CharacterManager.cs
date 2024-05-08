@@ -75,7 +75,9 @@ public class CharacterManager : MonoBehaviour
     float timeBetweenAttack, timeSinceAttack;
     // 리코일의 이동할 목표 위치
     private Vector2 targetPosition;
-    public static CharacterManager Instance; 
+    public static CharacterManager Instance;
+
+    GameObject sm;
 
 
 
@@ -100,18 +102,28 @@ public class CharacterManager : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         // hpBar.value = (float)curHp / (float)hp;
         // whatIsGround = LayerMask.NameToLayer("Ground");
+
+        sm = GameObject.Find("StageManager");
     }
 
     // Update is called once per frame
     private void Update()
     {
-        GetInputs();
-        UpdateJumpVariables( );
-        Move();
-        Jump();
-        Flip();
-        Attack();
-        ShotAttack();
+        if (sm.GetComponent<StageManager>().isPaused)
+        {
+
+        }
+        else
+        {
+            GetInputs();
+            UpdateJumpVariables();
+            Move();
+            Jump();
+            Flip();
+            Attack();
+            ShotAttack();
+        }
+
     }
 
     // Recoil when Player attack with weapon

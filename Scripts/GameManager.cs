@@ -7,10 +7,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    [Header("UI Setting")]
-    [SerializeField] GameObject startButton;
-    [SerializeField] GameObject exitButton;
-
 
 
     private void Awake()
@@ -31,10 +27,5 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // UI
 
-    public void OnClickStartButton()
-    {
-        Debug.Log("onclickButton");
-    }
 }
