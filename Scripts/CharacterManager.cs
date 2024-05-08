@@ -96,7 +96,7 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         // hpBar.value = (float)curHp / (float)hp;
-        // whatIsGround = LayerMask.NameToLayer("Ground");
+        whatIsGround = LayerMask.GetMask("Ground");
 
         sm = GameObject.Find("StageManager");
         gameOverWindow = GameObject.Find("GameOverWindow");
