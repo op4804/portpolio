@@ -31,7 +31,7 @@ public class CharacterManager : MonoBehaviour
     [Header("Recoil Settings")]
     // 이동에 걸리는 시간 (초)
     [SerializeField] public float moveDuration = 0.1f;    
-    [SerializeField] private Animator anim;
+    [SerializeField] Animator anim;
 
 
     [Header("HP Settings")]
@@ -45,10 +45,13 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] int knockbackSpeed = 10;
     // for enemy attack
     [SerializeField] float damage = 1;
+    [SerializeField] float meleeCooltime = 0.5f;
+    float timeBetweenAttack, timeSinceAttack;
     GameObject bullets;
     public GameObject bullet;
     public Transform bulletPos;
     public float bulletCooltime;
+    
     private float curTime;
 
 
@@ -67,7 +70,6 @@ public class CharacterManager : MonoBehaviour
     Color fullA = new Color(1, 1, 1, 1);
     private float xAxis;
     bool attack = false;
-    float timeBetweenAttack, timeSinceAttack;
     // 리코일의 이동할 목표 위치
     private Vector2 targetPosition;
     public static CharacterManager Instance;
@@ -297,12 +299,20 @@ public class CharacterManager : MonoBehaviour
 
     void Attack()
     {
-        timeSinceAttack = Time.deltaTime;
-
-        if (attack && timeSinceAttack >= timeBetweenAttack)
+        if (curTime <= 0)
         {
-            timeSinceAttack = 0;
-            anim.SetTrigger("Attack");
+            timeSinceAttack = Time.deltaTime;
+
+            if (attack && timeSinceAttack >= timeBetweenAttack)
+            {
+                timeSinceAttack = 0;
+                anim.SetTrigger("Attack");
+                curTime = meleeCooltime;
+            }
+        }
+        else
+        {
+            curTime -= Time.deltaTime;
         }
     }
 
