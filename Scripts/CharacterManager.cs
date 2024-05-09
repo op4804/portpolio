@@ -95,6 +95,7 @@ public class CharacterManager : MonoBehaviour
         pState = GetComponent<PlayerStateList>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         // hpBar.value = (float)curHp / (float)hp;
         whatIsGround = LayerMask.GetMask("Ground");
 
@@ -202,23 +203,22 @@ public class CharacterManager : MonoBehaviour
         attack = Input.GetMouseButtonDown(0);
     }
 
-    void Flip() 
+    void Flip()
     {
         if (xAxis < 0)
         {
-            transform.localScale = new Vector2(1, transform.localScale.y);
+            transform.localScale = new Vector2(-5, transform.localScale.y);
             pState.lookingRight = false;
         }
         else if (xAxis > 0) 
         {
-            transform.localScale = new Vector2(-1, transform.localScale.y);
+            transform.localScale = new Vector2(5, transform.localScale.y);
             pState.lookingRight = true;
         }
     }
 
     private void Move()
     {
-
         if (this.transform.position.x < startPoint.transform.position.x)
         {
             StartCoroutine(Knockback(-1));
@@ -228,6 +228,7 @@ public class CharacterManager : MonoBehaviour
             Debug.Log("StageClear!");
         }
         rb.velocity = new Vector2(walkSpeed * xAxis, rb.velocity.y);
+        anim.SetBool("Walking", rb.velocity.x != 0 && Grounded());
     }
 
     public bool Grounded()
@@ -267,6 +268,7 @@ public class CharacterManager : MonoBehaviour
                 airJumpCounter ++;
                 rb.velocity = new Vector3(rb.velocity.x, jumpForce);
             }
+            anim.SetBool("Jumping", !Grounded());
         }
     }
 
