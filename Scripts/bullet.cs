@@ -16,6 +16,8 @@ public class bullet : MonoBehaviour
     {
         pState = GetComponent<PlayerStateList>();
         Invoke("DestroyBullet", 2);
+
+        isLayer = LayerMask.GetMask("Ground","Enemy");
     }
 
     // Update is called once per frame
