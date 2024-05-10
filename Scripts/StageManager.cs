@@ -10,6 +10,8 @@ public class StageManager : MonoBehaviour
     [SerializeField] GameObject startPoint;
     [SerializeField] GameObject player;
 
+    [SerializeField] GameObject gameOverWindow;
+
     public bool isPaused;
 
     public float mapSize;
@@ -25,5 +27,11 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    public void ShowGameOverWindow()
+    {
+        gameOverWindow.SetActive(true);
     }
 }

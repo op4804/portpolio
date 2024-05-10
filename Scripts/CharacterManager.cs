@@ -76,8 +76,6 @@ public class CharacterManager : MonoBehaviour
 
 
     GameObject sm; 
-    GameObject gameOverWindow;
-
 
     private void Awake()
     {
@@ -102,7 +100,6 @@ public class CharacterManager : MonoBehaviour
         whatIsGround = LayerMask.GetMask("Ground");
 
         sm = GameObject.Find("StageManager");
-        gameOverWindow = GameObject.Find("GameOverWindow");
     }
 
     // Update is called once per frame
@@ -343,9 +340,9 @@ public class CharacterManager : MonoBehaviour
             {
                 hpBar.value = 0;
                 // player dead
-                
-                gameOverWindow.SetActive(true);
-                
+
+                sm.GetComponent<StageManager>().ShowGameOverWindow();
+
                 Destroy(gameObject);              
                 
             }
