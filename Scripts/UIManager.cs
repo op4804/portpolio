@@ -49,8 +49,14 @@ public class UIManager : MonoBehaviour
         {
             sm.GetComponent<StageManager>().isPaused = true;
             Time.timeScale = 1f;
-        }
-        
+        }       
 
     }
+    public void OnClicMainButton()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+
+
 }
