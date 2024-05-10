@@ -100,7 +100,7 @@ MonoBehaviour:
   distance: 0.5
   isLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 8
   dir: 0
   damage: 2
   bulletSpeed: 30
